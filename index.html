@@ -357,6 +357,109 @@
             opacity: 0.8;
         }
 
+        /* QR Code Styles */
+        .payment-options {
+            margin-top: 30px;
+            background-color: rgba(20, 20, 20, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .qr-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+
+        .qr-tab {
+            padding: 5px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .qr-tab.active {
+            background-color: var(--accent-color);
+        }
+
+        .qr-image-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .qr-image {
+            max-width: 100%;
+            width: 200px;
+            height: auto;
+            background-color: white;
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .qr-image:hover {
+            transform: scale(1.05);
+        }
+
+        .qr-image.active {
+            display: block;
+        }
+
+        /* Fullscreen image viewer */
+        .fullscreen-image-viewer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .fullscreen-image-viewer.active {
+            display: flex;
+        }
+
+        .fullscreen-image {
+            max-width: 90%;
+            max-height: 80vh;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .fullscreen-close {
+            color: white;
+            font-size: 1.5rem;
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .fullscreen-close:hover {
+            color: var(--accent-color);
+        }
+
+        .fullscreen-caption {
+            color: white;
+            margin-top: 15px;
+            font-size: 1.2rem;
+        }
+
         /* CTA Buttons */
         .cta-container {
             display: flex;
@@ -800,15 +903,32 @@
                             <a href="https://paypal.me/forgetfulbob" target="_blank" class="donate-button paypal">
                                 <i class="fab fa-paypal"></i> Donate via PayPal
                             </a>
+                        </div>
 
-                            <div>
-                                <img src="/placeholder.svg?height=150&width=150" alt="Payment QR Code" class="qr-code">
+                        <!-- QR Code Options (Always visible) -->
+                        <div class="payment-options">
+                            <div class="qr-tabs">
+                                <div class="qr-tab active" data-qr="bpi">BPI</div>
+                                <div class="qr-tab" data-qr="gcash">GCash</div>
+                                <div class="qr-tab" data-qr="unionbank">UnionBank</div>
+                            </div>
+                            <div class="qr-image-container">
+                                <img src="bpiqr.png" alt="BPI QR Code" class="qr-image active" id="bpi-qr">
+                                <img src="gcashqr.jpg" alt="GCash QR Code" class="qr-image" id="gcash-qr">
+                                <img src="unionbankqr.jpeg" alt="UnionBank QR Code" class="qr-image" id="unionbank-qr">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </main>
+
+        <!-- Fullscreen Image Viewer -->
+        <div class="fullscreen-image-viewer" id="fullscreen-viewer">
+            <span class="fullscreen-close" id="fullscreen-close">&times;</span>
+            <img src="" alt="Enlarged QR Code" class="fullscreen-image" id="fullscreen-image">
+            <div class="fullscreen-caption" id="fullscreen-caption"></div>
+        </div>
 
         <!-- CTA Buttons -->
         <div class="cta-container">
@@ -848,6 +968,60 @@
                     const trackId = track.getAttribute('data-track');
                     document.getElementById(`${trackId}-lyrics`).classList.add('active');
                 });
+            });
+
+            // QR Code Functionality (In-place)
+            const qrTabs = document.querySelectorAll('.qr-tab');
+            const qrImages = document.querySelectorAll('.qr-image');
+
+            // Tab switching functionality
+            qrTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs and images
+                    qrTabs.forEach(t => t.classList.remove('active'));
+                    qrImages.forEach(img => img.classList.remove('active'));
+
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+
+                    // Show corresponding QR image
+                    const qrType = tab.getAttribute('data-qr');
+                    document.getElementById(`${qrType}-qr`).classList.add('active');
+                });
+            });
+
+            // Fullscreen image viewer functionality
+            const fullscreenViewer = document.getElementById('fullscreen-viewer');
+            const fullscreenImage = document.getElementById('fullscreen-image');
+            const fullscreenCaption = document.getElementById('fullscreen-caption');
+            const fullscreenClose = document.getElementById('fullscreen-close');
+
+            // Show fullscreen image when QR image is clicked
+            qrImages.forEach(img => {
+                img.addEventListener('click', () => {
+                    fullscreenImage.src = img.src;
+                    fullscreenCaption.textContent = img.alt;
+                    fullscreenViewer.classList.add('active');
+                });
+            });
+
+            // Close fullscreen image when X is clicked
+            fullscreenClose.addEventListener('click', () => {
+                fullscreenViewer.classList.remove('active');
+            });
+
+            // Close fullscreen image when clicking outside the image
+            fullscreenViewer.addEventListener('click', (e) => {
+                if (e.target === fullscreenViewer) {
+                    fullscreenViewer.classList.remove('active');
+                }
+            });
+
+            // Close fullscreen image when Escape key is pressed
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && fullscreenViewer.classList.contains('active')) {
+                    fullscreenViewer.classList.remove('active');
+                }
             });
         });
     </script>

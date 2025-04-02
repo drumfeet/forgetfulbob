@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgetful Bob | Official Website</title>
+    <title>Forgetful Bob</title>
     <style>
         /* Global Styles */
         :root {
@@ -288,6 +288,23 @@
             color: var(--accent-color);
         }
 
+        /* Inline Lyrics Display */
+        .track-lyrics {
+            display: none;
+            padding: 10px 15px;
+            background-color: rgba(20, 20, 20, 0.3);
+            border-radius: 5px;
+            white-space: pre-line;
+            line-height: 1.6;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .track-lyrics.active {
+            display: block;
+        }
+
         /* Donate Section */
         .donate-content {
             text-align: center;
@@ -544,12 +561,11 @@
 <body>
     <div class="container">
         <header>
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Forgetful%20Bob%20-%20SA%20YO%20NA%20RA%20%28CD%29.jpg-UwjfNho9yuT2HO0Y6fu3vR2hy0Okyl.jpeg"
-                alt="Forgetful Bob" class="profile-photo">
+            <img src="sayonara_front_cover.jpg" alt="Forgetful Bob" class="profile-photo">
             <h1 class="band-name">Forgetful Bob</h1>
             <p class="location">Cebu City, Philippines</p>
 
-            <div class="social-icons">
+            <nav class="social-icons">
                 <a href="https://facebook.com/forgetfulbob" target="_blank" aria-label="Facebook"><i
                         class="fab fa-facebook"></i></a>
                 <a href="https://twitter.com/forgetfulbob" target="_blank" aria-label="Twitter"><i
@@ -572,9 +588,9 @@
                         class="fas fa-music"></i></a>
                 <a href="https://slaps.com/forgetfulbob" target="_blank" aria-label="Slaps"><i
                         class="fas fa-headphones"></i></a>
-            </div>
+            </nav>
 
-            <div class="youtube-container">
+            <section class="youtube-container">
                 <div class="youtube-title">
                     <i class="fab fa-youtube"></i> Music Playlist
                 </div>
@@ -585,12 +601,12 @@
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
-            </div>
+            </section>
         </header>
 
         <main>
             <!-- About Section -->
-            <div class="accordion" id="about-accordion">
+            <section class="accordion" id="about-accordion">
                 <div class="accordion-header">
                     <h2>About</h2>
                     <span class="accordion-icon">▼</span>
@@ -613,319 +629,96 @@
                         </p>
                     </div>
                 </div>
-            </div>
+            </section>
 
             <!-- Music Section with Integrated Lyrics -->
-            <div class="accordion" id="music-accordion">
+            <section class="accordion" id="music-accordion">
                 <div class="accordion-header">
                     <h2>Music</h2>
                     <span class="accordion-icon">▼</span>
                 </div>
                 <div class="accordion-content">
-                    <!-- Album Section -->
-                    <div class="album">
-                        <div class="album-info">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Forgetful%20Bob%20-%20SA%20YO%20NA%20RA%20%28CD%29.jpg-UwjfNho9yuT2HO0Y6fu3vR2hy0Okyl.jpeg"
-                                alt="SA YO NA RA Album Cover" class="album-cover">
-                            <div class="album-details">
+                    <article class="album">
+                        <figure class="album-info">
+                            <img src="sayonara_front_cover.jpg" alt="SA YO NA RA Album Cover" class="album-cover">
+                            <figcaption class="album-details">
                                 <h3 class="album-title">SA YO NA RA</h3>
                                 <p class="album-year">2019</p>
                                 <ul class="tracklist" id="album-tracklist">
-                                    <li data-track="jaw" class="active"><span class="track-number">1</span> JAW</li>
-                                    <li data-track="summer"><span class="track-number">2</span> SUMMER</li>
-                                    <li data-track="space"><span class="track-number">3</span> SPACE</li>
-                                    <li data-track="sunday33"><span class="track-number">4</span> SUNDAY33</li>
-                                    <li data-track="loss"><span class="track-number">5</span> LOSS</li>
-                                    <li data-track="departure"><span class="track-number">6</span> DEPARTURE</li>
-                                    <li data-track="pull"><span class="track-number">7</span> PULL</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                                    <li data-track="jaw">
+                                        <div class="track-item">
+                                            <span class="track-number">1</span> JAW
+                                        </div>
 
-                    <!-- Singles Section -->
-                    <div class="album">
-                        <div class="album-info">
+                                    </li>
+                                    <li data-track="summer">
+                                        <div class="track-item">
+                                            <span class="track-number">2</span> SUMMER
+                                        </div>
+
+                                    </li>
+                                    <li data-track="space">
+                                        <div class="track-item">
+                                            <span class="track-number">3</span> SPACE
+                                        </div>
+
+                                    </li>
+                                    <li data-track="sunday33">
+                                        <div class="track-item">
+                                            <span class="track-number">4</span> SUNDAY33
+                                        </div>
+                                    </li>
+                                    <li data-track="loss">
+                                        <div class="track-item">
+                                            <span class="track-number">5</span> LOSS
+                                        </div>
+                                    </li>
+                                    <li data-track="departure">
+                                        <div class="track-item">
+                                            <span class="track-number">6</span> DEPARTURE
+                                        </div>
+                                    </li>
+                                    <li data-track="pull">
+                                        <div class="track-item">
+                                            <span class="track-number">7</span> PULL
+                                        </div>
+                                    </li>
+                                </ul>
+                            </figcaption>
+                        </figure>
+                    </article>
+
+                    <article class="album">
+                        <figure class="album-info">
                             <img src="acoustic_cover.jpg" alt="FBOB Single Cover" class="album-cover">
-                            <div class="album-details">
+                            <figcaption class="album-details">
                                 <p class="album-year">2021</p>
                                 <ul class="tracklist singles-tracklist">
                                     <li data-track="fbob"><span class="track-number">1</span>FORGETFUL BOB</li>
                                 </ul>
-                            </div>
-                        </div>
-                    </div>
+                            </figcaption>
+                        </figure>
+                    </article>
 
-                    <div class="album">
-                        <div class="album-info">
+                    <article class="album">
+                        <figure class="album-info">
                             <img src="days_cover.jpg" alt="DAYS Single Cover" class="album-cover">
-                            <div class="album-details">
+                            <figcaption class="album-details">
 
                                 <p class="album-year">2021</p>
                                 <ul class="tracklist singles-tracklist">
                                     <li data-track="days"><span class="track-number">1</span> DAYS</li>
                                 </ul>
-                            </div>
-                        </div>
-                    </div>
+                            </figcaption>
+                        </figure>
+                    </article>
 
-                    <!-- All Lyrics Displays -->
-                    <h3 style="margin: 40px 0 20px; font-size: 2rem; text-align: center;">Lyrics</h3>
 
-                    <!-- Album Lyrics -->
-                    <div class="lyrics-display active" id="jaw-lyrics">
-                        <h3 class="lyrics-title">JAW</h3>
-                        Verse 1:
-                        Words unspoken, feelings deep
-                        In silence we both retreat
-                        What's left unsaid between us now
-                        Hangs heavy in the air somehow
-
-                        Chorus:
-                        Jaw clenched tight, holding back
-                        All the words I lack
-                        If I could just say what I mean
-                        Maybe then you'd finally see
-
-                        Verse 2:
-                        Time keeps passing, day by day
-                        As we both look the other way
-                        The distance grows with every breath
-                        This silence feels like slow death
-
-                        (Repeat Chorus)
-
-                        Bridge:
-                        Open up, let it out
-                        Break these walls, let me out
-                        Before it's too late to try
-                        Before we say goodbye
-
-                        (Repeat Chorus)
-
-                        Outro:
-                        Jaw clenched tight...
-                    </div>
-
-                    <div class="lyrics-display" id="summer-lyrics">
-                        <h3 class="lyrics-title">SUMMER</h3>
-                        Verse 1:
-                        Golden light through bedroom blinds
-                        Memories of better times
-                        Your laughter echoes in my mind
-                        Those summer days we left behind
-
-                        Chorus:
-                        Summer came and went too fast
-                        Moments that could never last
-                        The heat between us slowly cools
-                        As autumn leaves begin to fall
-
-                        Verse 2:
-                        Ice cream melting in the sun
-                        Midnight drives when day was done
-                        Your hand in mine, skin against skin
-                        A perfect moment we were in
-
-                        (Repeat Chorus)
-
-                        Bridge:
-                        I'd give anything to feel
-                        Those summer days again with you
-                        Before the cold came settling in
-                        Before we lost what might have been
-
-                        (Repeat Chorus)
-
-                        Outro:
-                        Summer came and went...
-                    </div>
-
-                    <div class="lyrics-display" id="space-lyrics">
-                        <h3 class="lyrics-title">SPACE</h3>
-                        Verse 1:
-                        Stars above, endless night
-                        You and I bathed in moonlight
-                        Constellations in your eyes
-                        Universe between our sighs
-
-                        Chorus:
-                        Space between us growing wide
-                        Galaxies we can't divide
-                        Drifting further every day
-                        Like planets spinning far away
-
-                        Verse 2:
-                        Gravity pulls us apart
-                        Black holes forming in my heart
-                        Light years pass in just one day
-                        As you slowly fade away
-
-                        (Repeat Chorus)
-
-                        Bridge:
-                        Can we close this cosmic gap?
-                        Find our way back to orbit's path
-                        Or are we destined just to be
-                        Lost in space eternally?
-
-                        (Repeat Chorus)
-
-                        Outro:
-                        Space between us...
-                    </div>
-
-                    <div class="lyrics-display" id="sunday33-lyrics">
-                        <h3 class="lyrics-title">SUNDAY33</h3>
-                        Verse 1:
-                        Sunday morning, 3:33
-                        Thoughts of you keep haunting me
-                        Coffee cold, newspaper unread
-                        Memories spinning in my head
-
-                        Chorus:
-                        Sunday, thirty-three
-                        The day you walked away from me
-                        Sunday, thirty-three
-                        A number burned in memory
-
-                        Verse 2:
-                        Church bells ring across the town
-                        As rain begins to pour down
-                        Everyone rushing to get inside
-                        While I'm still trying to survive
-
-                        (Repeat Chorus)
-
-                        Bridge:
-                        Time stands still at 3:33
-                        Clock hands frozen endlessly
-                        Every Sunday feels the same
-                        Since you erased me from your name
-
-                        (Repeat Chorus)
-
-                        Outro:
-                        Sunday, thirty-three...
-                    </div>
-
-                    <div class="lyrics-display" id="loss-lyrics">
-                        <h3 class="lyrics-title">LOSS</h3>
-                        Verse 1:
-                        Empty spaces where you used to be
-                        Phantom limbs I still can feel
-                        The weight of absence crushes me
-                        As I learn how to breathe
-
-                        Chorus:
-                        Loss carves hollows in my chest
-                        Where happiness once made its nest
-                        I'm learning how to carry on
-                        With pieces of me forever gone
-
-                        Verse 2:
-                        Your clothes still hanging in the closet door
-                        Your voice still echoes down the hall
-                        I reach for you in empty beds
-                        And conversations in my head
-
-                        (Repeat Chorus)
-
-                        Bridge:
-                        They say that time heals every wound
-                        But some cuts change your very form
-                        I'm not the same as I once was
-                        Before I knew this kind of loss
-
-                        (Repeat Chorus)
-
-                        Outro:
-                        Loss carves hollows...
-                    </div>
-
-                    <div class="lyrics-display" id="departure-lyrics">
-                        <h3 class="lyrics-title">DEPARTURE</h3>
-                        Verse 1:
-                        Terminal announcements overhead
-                        Last calls for flights about to leave
-                        You're standing there with bags in hand
-                        Ready for a different land
-
-                        Chorus:
-                        Departure time is drawing near
-                        The distance soon will interfere
-                        Between what was and what will be
-                        As you fly away from me
-
-                        Verse 2:
-                        Promises to call and write
-                        Hollow words that sound so right
-                        We both know what happens next
-                        As miles grow and feelings flex
-
-                        (Repeat Chorus)
-
-                        Bridge:
-                        I should have told you how I felt
-                        Before you had your ticket dealt
-                        Now all I have is one last wave
-                        As you depart and I must stay
-
-                        (Repeat Chorus)
-
-                        Outro:
-                        Departure time...
-                    </div>
-
-                    <div class="lyrics-display" id="pull-lyrics">
-                        <h3 class="lyrics-title">PULL</h3>
-                        Verse 1:
-                        Magnetic force between our souls
-                        Like gravity that takes its toll
-                        No matter how I try to flee
-                        You always pull me back to me
-
-                        Chorus:
-                        Pull me under, pull me in
-                        This tidal force I can't resist
-                        Pull me closer, pull me deep
-                        Into waters where I can't breathe
-
-                        Verse 2:
-                        I orbit you like faithful moon
-                        Knowing I'll be crashing soon
-                        The closer that I seem to get
-                        The stronger is your silhouette
-
-                        (Repeat Chorus)
-
-                        Bridge:
-                        Should I fight against this pull?
-                        Or surrender, give my all?
-                        In your gravity I find
-                        Both my freedom and my bind
-
-                        (Repeat Chorus)
-
-                        Outro:
-                        Pull me under...
-                    </div>
-
-                    <!-- Singles Lyrics Display -->
-                    <div class="lyrics-display" id="fbob-lyrics">
-                        <h3 class="lyrics-title">FBOB</h3>
-                        <p><em>Lyrics will be provided later.</em></p>
-                    </div>
-
-                    <div class="lyrics-display" id="days-lyrics">
-                        <h3 class="lyrics-title">DAYS</h3>
-                        <p><em>Lyrics will be provided later.</em></p>
-                    </div>
                 </div>
-            </div>
+            </section>
 
             <!-- Donate Section as Accordion -->
-            <div class="accordion" id="donate-accordion">
+            <section class="accordion" id="donate-accordion">
                 <div class="accordion-header">
                     <h2>Support</h2>
                     <span class="accordion-icon">▼</span>
@@ -936,10 +729,7 @@
                             Your support helps us continue creating music. Thank you for being part of our journey!
                         </p>
                         <div class="donate-options">
-                            <a href="https://www.patreon.com/forgetfulbob" target="_blank"
-                                class="donate-button patreon">
-                                <i class="fab fa-patreon"></i> Support on Patreon
-                            </a>
+
 
                             <a href="https://paypal.me/forgetfulbob" target="_blank" class="donate-button paypal">
                                 <i class="fab fa-paypal"></i> Donate via PayPal
@@ -947,7 +737,7 @@
                         </div>
 
                         <!-- QR Code Options (Always visible) -->
-                        <div class="payment-options">
+                        <aside class="payment-options">
                             <div class="qr-tabs">
                                 <div class="qr-tab active" data-qr="bpi">BPI</div>
                                 <div class="qr-tab" data-qr="gcash">GCash</div>
@@ -958,64 +748,74 @@
                                 <img src="gcashqr.jpg" alt="GCash QR Code" class="qr-image" id="gcash-qr">
                                 <img src="unionbankqr.jpeg" alt="UnionBank QR Code" class="qr-image" id="unionbank-qr">
                             </div>
-                        </div>
+                        </aside>
                     </div>
                 </div>
-            </div>
+            </section>
         </main>
 
         <!-- Fullscreen Image Viewer -->
-        <div class="fullscreen-image-viewer" id="fullscreen-viewer">
+        <dialog class="fullscreen-image-viewer" id="fullscreen-viewer">
             <span class="fullscreen-close" id="fullscreen-close">&times;</span>
             <img src="" alt="Enlarged QR Code" class="fullscreen-image" id="fullscreen-image">
             <div class="fullscreen-caption" id="fullscreen-caption"></div>
-        </div>
+        </dialog>
 
         <!-- CTA Buttons -->
-        <div class="cta-container">
-            <a href="https://forms.google.com/newsletter-signup" target="_blank" class="cta-button">Subscribe</a>
-            <a href="https://forms.google.com/contact-band" target="_blank" class="cta-button secondary">Contact</a>
-            <a href="https://calendly.com/forgetfulbob/chat" target="_blank" class="cta-button tertiary">Let's Chat</a>
-        </div>
+        <nav class="cta-container">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSffxPWO4zNyjXCUFZDKCKcLLW2OVLzhH8Ebcd5xd9fm5HC38A/viewform?usp=dialog"
+                target="_blank" class="cta-button">Subscribe</a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSffxPWO4zNyjXCUFZDKCKcLLW2OVLzhH8Ebcd5xd9fm5HC38A/viewform?usp=header"
+                target="_blank" class="cta-button secondary">Contact</a>
+            <a href="https://calendly.com/forgetfulbob/chat" target="_blank" class="cta-button tertiary">Book a Call</a>
+        </nav>
     </div>
 
     <script>
-        // Accordion functionality
+        // Refactored JavaScript with better organization
+
+        // Initialize all functionality when DOM is fully loaded
         document.addEventListener('DOMContentLoaded', function () {
+            initAccordions();
+            initTrackLyrics();
+            initQrCodeTabs();
+            initFullscreenViewer();
+        });
+
+        // Accordion functionality
+        function initAccordions() {
             const accordions = document.querySelectorAll('.accordion');
 
             accordions.forEach(accordion => {
                 const header = accordion.querySelector('.accordion-header');
-
                 header.addEventListener('click', () => {
                     accordion.classList.toggle('active');
                 });
             });
+        }
 
-            // Track selection and lyrics display
-            const trackItems = document.querySelectorAll('#album-tracklist li, .singles-tracklist li');
-            const lyricsDisplays = document.querySelectorAll('.lyrics-display');
+        // Track selection and lyrics toggle functionality
+        function initTrackLyrics() {
+            const trackItems = document.querySelectorAll('.track-item');
 
-            trackItems.forEach(track => {
-                track.addEventListener('click', () => {
-                    // Remove active class from all tracks and lyrics
-                    trackItems.forEach(t => t.classList.remove('active'));
-                    lyricsDisplays.forEach(l => l.classList.remove('active'));
+            trackItems.forEach(trackItem => {
+                trackItem.addEventListener('click', () => {
+                    const trackLi = trackItem.closest('li');
+                    const trackLyrics = trackLi.querySelector('.track-lyrics');
 
-                    // Add active class to clicked track
-                    track.classList.add('active');
-
-                    // Show corresponding lyrics
-                    const trackId = track.getAttribute('data-track');
-                    document.getElementById(`${trackId}-lyrics`).classList.add('active');
+                    if (trackLyrics) {
+                        trackLyrics.classList.toggle('active');
+                        trackLi.classList.toggle('active');
+                    }
                 });
             });
+        }
 
-            // QR Code Functionality (In-place)
+        // QR Code tab switching functionality
+        function initQrCodeTabs() {
             const qrTabs = document.querySelectorAll('.qr-tab');
             const qrImages = document.querySelectorAll('.qr-image');
 
-            // Tab switching functionality
             qrTabs.forEach(tab => {
                 tab.addEventListener('click', () => {
                     // Remove active class from all tabs and images
@@ -1027,17 +827,23 @@
 
                     // Show corresponding QR image
                     const qrType = tab.getAttribute('data-qr');
-                    document.getElementById(`${qrType}-qr`).classList.add('active');
+                    const qrImage = document.getElementById(`${qrType}-qr`);
+                    if (qrImage) {
+                        qrImage.classList.add('active');
+                    }
                 });
             });
+        }
 
-            // Fullscreen image viewer functionality
+        // Fullscreen image viewer functionality
+        function initFullscreenViewer() {
             const fullscreenViewer = document.getElementById('fullscreen-viewer');
             const fullscreenImage = document.getElementById('fullscreen-image');
             const fullscreenCaption = document.getElementById('fullscreen-caption');
             const fullscreenClose = document.getElementById('fullscreen-close');
+            const qrImages = document.querySelectorAll('.qr-image');
 
-            // Show fullscreen image when QR image is clicked
+            // Open fullscreen viewer when QR image is clicked
             qrImages.forEach(img => {
                 img.addEventListener('click', () => {
                     fullscreenImage.src = img.src;
@@ -1046,25 +852,28 @@
                 });
             });
 
-            // Close fullscreen image when X is clicked
-            fullscreenClose.addEventListener('click', () => {
+            // Close fullscreen viewer methods
+            function closeViewer() {
                 fullscreenViewer.classList.remove('active');
-            });
+            }
 
-            // Close fullscreen image when clicking outside the image
+            // Close on X button click
+            fullscreenClose.addEventListener('click', closeViewer);
+
+            // Close when clicking outside the image
             fullscreenViewer.addEventListener('click', (e) => {
                 if (e.target === fullscreenViewer) {
-                    fullscreenViewer.classList.remove('active');
+                    closeViewer();
                 }
             });
 
-            // Close fullscreen image when Escape key is pressed
+            // Close when Escape key is pressed
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && fullscreenViewer.classList.contains('active')) {
-                    fullscreenViewer.classList.remove('active');
+                    closeViewer();
                 }
             });
-        });
+        }
     </script>
 </body>
 

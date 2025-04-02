@@ -136,7 +136,7 @@
             padding-bottom: 60px;
         }
 
-        /* Accordion Styles */
+        /* Accordion Styles - Improved Animation */
         .accordion {
             margin-bottom: 20px;
             border-radius: 8px;
@@ -158,6 +158,11 @@
             background-color: rgba(20, 20, 20, 0.7);
         }
 
+        .accordion-header:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: -2px;
+        }
+
         .accordion-header h2 {
             font-size: 1.5rem;
             font-weight: 600;
@@ -165,19 +170,22 @@
 
         .accordion-icon {
             font-size: 1.5rem;
-            transition: var(--transition);
+            transition: transform 0.3s ease;
         }
 
         .accordion-content {
-            max-height: 0;
+            height: 0;
             overflow: hidden;
-            transition: max-height 0.5s ease;
+            transition: height 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
             padding: 0 20px;
         }
 
+        .accordion-content-inner {
+            padding: 20px 0;
+        }
+
         .accordion.active .accordion-content {
-            max-height: 2000px;
-            padding: 20px;
+            height: auto;
         }
 
         .accordion.active .accordion-icon {
@@ -288,10 +296,11 @@
             color: var(--accent-color);
         }
 
-        /* Inline Lyrics Display */
+        /* Inline Lyrics Display - Improved Animation */
         .track-lyrics {
-            display: none;
-            padding: 10px 15px;
+            height: 0;
+            overflow: hidden;
+            padding: 0 15px;
             background-color: rgba(20, 20, 20, 0.3);
             border-radius: 5px;
             white-space: pre-line;
@@ -299,10 +308,39 @@
             font-size: 0.9rem;
             margin-top: 5px;
             border-left: 3px solid var(--accent-color);
+            transition: height 0.3s cubic-bezier(0.215, 0.61, 0.355, 1),
+                padding 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        .track-lyrics-inner {
+            padding: 10px 0;
         }
 
         .track-lyrics.active {
-            display: block;
+            height: auto;
+            padding: 10px 15px;
+        }
+
+        /* Track Item Focus States */
+        .track-item {
+            padding: 2px 0;
+            transition: var(--transition);
+            position: relative;
+            width: 100%;
+        }
+
+        .track-item:focus-visible {
+            outline: none;
+        }
+
+        .track-item:focus-visible::before {
+            content: "";
+            position: absolute;
+            left: -5px;
+            top: -2px;
+            bottom: -2px;
+            width: 3px;
+            background-color: var(--accent-color);
         }
 
         /* Donate Section */
@@ -405,6 +443,11 @@
             background-color: var(--accent-color);
         }
 
+        .qr-tab:focus-visible {
+            outline: 2px solid white;
+            outline-offset: 2px;
+        }
+
         .qr-image-container {
             display: flex;
             justify-content: center;
@@ -458,6 +501,8 @@
         }
 
         .fullscreen-close {
+            background: none;
+            border: none;
             color: white;
             font-size: 1.5rem;
             position: absolute;
@@ -465,10 +510,17 @@
             right: 30px;
             cursor: pointer;
             transition: var(--transition);
+            padding: 5px 10px;
         }
 
-        .fullscreen-close:hover {
+        .fullscreen-close:hover,
+        .fullscreen-close:focus {
             color: var(--accent-color);
+        }
+
+        .fullscreen-close:focus-visible {
+            outline: 2px solid white;
+            outline-offset: 2px;
         }
 
         .fullscreen-caption {
@@ -607,173 +659,237 @@
         <main>
             <!-- About Section -->
             <section class="accordion" id="about-accordion">
-                <div class="accordion-header">
-                    <h2>About</h2>
-                    <span class="accordion-icon">▼</span>
+                <div class="accordion-header" role="button" tabindex="0" aria-expanded="false"
+                    aria-controls="about-content">
+                    <h2 id="about-heading">About</h2>
+                    <span class="accordion-icon" aria-hidden="true">▼</span>
                 </div>
-                <div class="accordion-content">
-                    <div class="about-content">
-                        <p class="about-text">
-                            Forgetful Bob is an indie rock band from Cebu City, Philippines, formed in 2018. The band
-                            consists of Dominic Dosdos (vocals/guitar), Ethan Ronoel Salazar (guitar), Jess Tamboboy
-                            (bass), Deniel Molina (drums), and Michael Tubato (keyboards).
-                            <br><br>
-                            Drawing inspiration from a diverse range of influences, Forgetful Bob creates a unique sound
-                            that blends nostalgic melodies with introspective lyrics. Their music explores themes of
-                            memory, longing, and the human experience, inviting listeners on an emotional journey
-                            through their soundscapes.
-                            <br><br>
-                            The band released their debut album "SA YO NA RA" in 2019, which received critical acclaim
-                            in the local music scene. They continue to perform at venues across the Philippines,
-                            connecting with fans through their passionate live performances.
-                        </p>
+                <div class="accordion-content" id="about-content" aria-labelledby="about-heading">
+                    <div class="accordion-content-inner">
+                        <div class="about-content">
+                            <p class="about-text">
+                                Forgetful Bob is an indie rock band from Cebu City, Philippines, formed in 2018. The
+                                band
+                                consists of Dominic Dosdos (vocals/guitar), Ethan Ronoel Salazar (guitar), Jess Tamboboy
+                                (bass), Deniel Molina (drums), and Michael Tubato (keyboards).
+                                <br><br>
+                                Drawing inspiration from a diverse range of influences, Forgetful Bob creates a unique
+                                sound
+                                that blends nostalgic melodies with introspective lyrics. Their music explores themes of
+                                memory, longing, and the human experience, inviting listeners on an emotional journey
+                                through their soundscapes.
+                                <br><br>
+                                The band released their debut album "SA YO NA RA" in 2019, which received critical
+                                acclaim
+                                in the local music scene. They continue to perform at venues across the Philippines,
+                                connecting with fans through their passionate live performances.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <!-- Music Section with Integrated Lyrics -->
             <section class="accordion" id="music-accordion">
-                <div class="accordion-header">
-                    <h2>Music</h2>
-                    <span class="accordion-icon">▼</span>
+                <div class="accordion-header" role="button" tabindex="0" aria-expanded="false"
+                    aria-controls="music-content">
+                    <h2 id="music-heading">Music</h2>
+                    <span class="accordion-icon" aria-hidden="true">▼</span>
                 </div>
-                <div class="accordion-content">
-                    <article class="album">
-                        <figure class="album-info">
-                            <img src="sayonara_front_cover.jpg" alt="SA YO NA RA Album Cover" class="album-cover">
-                            <figcaption class="album-details">
-                                <h3 class="album-title">SA YO NA RA</h3>
-                                <p class="album-year">2019</p>
-                                <ul class="tracklist" id="album-tracklist">
-                                    <li data-track="jaw">
-                                        <div class="track-item">
-                                            <span class="track-number">1</span> JAW
-                                        </div>
+                <div class="accordion-content" id="music-content" aria-labelledby="music-heading">
+                    <div class="accordion-content-inner">
+                        <article class="album">
+                            <figure class="album-info">
+                                <img src="sayonara_front_cover.jpg" alt="SA YO NA RA Album Cover" class="album-cover">
+                                <figcaption class="album-details">
+                                    <h3 class="album-title">SA YO NA RA</h3>
+                                    <p class="album-year">2019</p>
+                                    <ul class="tracklist" id="album-tracklist">
+                                        <li data-track="jaw">
+                                            <div class="track-item" role="button" tabindex="0" aria-expanded="false"
+                                                aria-controls="jaw-lyrics">
+                                                <span class="track-number">1</span> JAW
+                                            </div>
+                                            <div class="track-lyrics" id="jaw-lyrics">
+                                                <div class="track-lyrics-inner">
+                                                    Lyrics for JAW go here...
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li data-track="summer">
+                                            <div class="track-item" role="button" tabindex="0" aria-expanded="false"
+                                                aria-controls="summer-lyrics">
+                                                <span class="track-number">2</span> SUMMER
+                                            </div>
+                                            <div class="track-lyrics" id="summer-lyrics">
+                                                <div class="track-lyrics-inner">
+                                                    Lyrics for SUMMER go here...
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li data-track="space">
+                                            <div class="track-item" role="button" tabindex="0" aria-expanded="false"
+                                                aria-controls="space-lyrics">
+                                                <span class="track-number">3</span> SPACE
+                                            </div>
+                                            <div class="track-lyrics" id="space-lyrics">
+                                                <div class="track-lyrics-inner">
+                                                    Lyrics for SPACE go here...
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li data-track="sunday33">
+                                            <div class="track-item" role="button" tabindex="0" aria-expanded="false"
+                                                aria-controls="sunday33-lyrics">
+                                                <span class="track-number">4</span> SUNDAY33
+                                            </div>
+                                            <div class="track-lyrics" id="sunday33-lyrics">
+                                                <div class="track-lyrics-inner">
+                                                    Lyrics for SUNDAY33 go here...
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li data-track="loss">
+                                            <div class="track-item" role="button" tabindex="0" aria-expanded="false"
+                                                aria-controls="loss-lyrics">
+                                                <span class="track-number">5</span> LOSS
+                                            </div>
+                                            <div class="track-lyrics" id="loss-lyrics">
+                                                <div class="track-lyrics-inner">
+                                                    Lyrics for LOSS go here...
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li data-track="departure">
+                                            <div class="track-item" role="button" tabindex="0" aria-expanded="false"
+                                                aria-controls="departure-lyrics">
+                                                <span class="track-number">6</span> DEPARTURE
+                                            </div>
+                                            <div class="track-lyrics" id="departure-lyrics">
+                                                <div class="track-lyrics-inner">
+                                                    Lyrics for DEPARTURE go here...
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li data-track="pull">
+                                            <div class="track-item" role="button" tabindex="0" aria-expanded="false"
+                                                aria-controls="pull-lyrics">
+                                                <span class="track-number">7</span> PULL
+                                            </div>
+                                            <div class="track-lyrics" id="pull-lyrics">
+                                                <div class="track-lyrics-inner">
+                                                    Lyrics for PULL go here...
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </figcaption>
+                            </figure>
+                        </article>
 
-                                    </li>
-                                    <li data-track="summer">
-                                        <div class="track-item">
-                                            <span class="track-number">2</span> SUMMER
-                                        </div>
+                        <article class="album">
+                            <figure class="album-info">
+                                <img src="acoustic_cover.jpg" alt="FBOB Single Cover" class="album-cover">
+                                <figcaption class="album-details">
+                                    <p class="album-year">2021</p>
+                                    <ul class="tracklist singles-tracklist">
+                                        <li data-track="fbob"><span class="track-number">1</span>FORGETFUL BOB</li>
+                                    </ul>
+                                </figcaption>
+                            </figure>
+                        </article>
 
-                                    </li>
-                                    <li data-track="space">
-                                        <div class="track-item">
-                                            <span class="track-number">3</span> SPACE
-                                        </div>
+                        <article class="album">
+                            <figure class="album-info">
+                                <img src="days_cover.jpg" alt="DAYS Single Cover" class="album-cover">
+                                <figcaption class="album-details">
 
-                                    </li>
-                                    <li data-track="sunday33">
-                                        <div class="track-item">
-                                            <span class="track-number">4</span> SUNDAY33
-                                        </div>
-                                    </li>
-                                    <li data-track="loss">
-                                        <div class="track-item">
-                                            <span class="track-number">5</span> LOSS
-                                        </div>
-                                    </li>
-                                    <li data-track="departure">
-                                        <div class="track-item">
-                                            <span class="track-number">6</span> DEPARTURE
-                                        </div>
-                                    </li>
-                                    <li data-track="pull">
-                                        <div class="track-item">
-                                            <span class="track-number">7</span> PULL
-                                        </div>
-                                    </li>
-                                </ul>
-                            </figcaption>
-                        </figure>
-                    </article>
-
-                    <article class="album">
-                        <figure class="album-info">
-                            <img src="acoustic_cover.jpg" alt="FBOB Single Cover" class="album-cover">
-                            <figcaption class="album-details">
-                                <p class="album-year">2021</p>
-                                <ul class="tracklist singles-tracklist">
-                                    <li data-track="fbob"><span class="track-number">1</span>FORGETFUL BOB</li>
-                                </ul>
-                            </figcaption>
-                        </figure>
-                    </article>
-
-                    <article class="album">
-                        <figure class="album-info">
-                            <img src="days_cover.jpg" alt="DAYS Single Cover" class="album-cover">
-                            <figcaption class="album-details">
-
-                                <p class="album-year">2021</p>
-                                <ul class="tracklist singles-tracklist">
-                                    <li data-track="days"><span class="track-number">1</span> DAYS</li>
-                                </ul>
-                            </figcaption>
-                        </figure>
-                    </article>
+                                    <p class="album-year">2021</p>
+                                    <ul class="tracklist singles-tracklist">
+                                        <li data-track="days"><span class="track-number">1</span> DAYS</li>
+                                    </ul>
+                                </figcaption>
+                            </figure>
+                        </article>
 
 
+                    </div>
                 </div>
             </section>
 
-            <!-- Donate Section as Accordion -->
+            <!-- Support Section as Accordion -->
             <section class="accordion" id="donate-accordion">
-                <div class="accordion-header">
-                    <h2>Support</h2>
-                    <span class="accordion-icon">▼</span>
+                <div class="accordion-header" role="button" tabindex="0" aria-expanded="false"
+                    aria-controls="donate-content">
+                    <h2 id="support-heading">Support</h2>
+                    <span class="accordion-icon" aria-hidden="true">▼</span>
                 </div>
-                <div class="accordion-content">
-                    <div class="donate-content">
-                        <p class="donate-text">
-                            Your support helps us continue creating music. Thank you for being part of our journey!
-                        </p>
-                        <div class="donate-options">
+                <div class="accordion-content" id="donate-content" aria-labelledby="support-heading">
+                    <div class="accordion-content-inner">
+                        <div class="donate-content">
+                            <p class="donate-text">
+                                Your support helps us continue creating music. Thank you for being part of our journey!
+                            </p>
+                            <div class="donate-options">
 
 
-                            <a href="https://paypal.me/forgetfulbob" target="_blank" class="donate-button paypal">
-                                <i class="fab fa-paypal"></i> Donate via PayPal
-                            </a>
+                                <a href="https://paypal.me/forgetfulbob" target="_blank" rel="noopener"
+                                    class="donate-button paypal">
+                                    <i class="fab fa-paypal" aria-hidden="true"></i> Donate via PayPal
+                                </a>
+                            </div>
+
+                            <!-- QR Code Options (Always visible) -->
+                            <aside class="payment-options">
+                                <div class="qr-tabs" role="tablist">
+                                    <button class="qr-tab active" id="bpi-tab" role="tab" aria-selected="true"
+                                        aria-controls="bpi-panel" data-qr="bpi">BPI</button>
+                                    <button class="qr-tab" id="gcash-tab" role="tab" aria-selected="false"
+                                        aria-controls="gcash-panel" data-qr="gcash">GCash</button>
+                                    <button class="qr-tab" id="unionbank-tab" role="tab" aria-selected="false"
+                                        aria-controls="unionbank-panel" data-qr="unionbank">UnionBank</button>
+                                </div>
+                                <div class="qr-image-container">
+                                    <div id="bpi-panel" role="tabpanel" aria-labelledby="bpi-tab" tabindex="0">
+                                        <img src="bpiqr.png" alt="BPI QR Code" class="qr-image active" id="bpi-qr">
+                                    </div>
+                                    <div id="gcash-panel" role="tabpanel" aria-labelledby="gcash-tab" tabindex="0"
+                                        hidden>
+                                        <img src="gcashqr.jpg" alt="GCash QR Code" class="qr-image" id="gcash-qr">
+                                    </div>
+                                    <div id="unionbank-panel" role="tabpanel" aria-labelledby="unionbank-tab"
+                                        tabindex="0" hidden>
+                                        <img src="unionbankqr.jpeg" alt="UnionBank QR Code" class="qr-image"
+                                            id="unionbank-qr">
+                                    </div>
+                                </div>
+                            </aside>
                         </div>
-
-                        <!-- QR Code Options (Always visible) -->
-                        <aside class="payment-options">
-                            <div class="qr-tabs">
-                                <div class="qr-tab active" data-qr="bpi">BPI</div>
-                                <div class="qr-tab" data-qr="gcash">GCash</div>
-                                <div class="qr-tab" data-qr="unionbank">UnionBank</div>
-                            </div>
-                            <div class="qr-image-container">
-                                <img src="bpiqr.png" alt="BPI QR Code" class="qr-image active" id="bpi-qr">
-                                <img src="gcashqr.jpg" alt="GCash QR Code" class="qr-image" id="gcash-qr">
-                                <img src="unionbankqr.jpeg" alt="UnionBank QR Code" class="qr-image" id="unionbank-qr">
-                            </div>
-                        </aside>
                     </div>
                 </div>
             </section>
         </main>
 
         <!-- Fullscreen Image Viewer -->
-        <dialog class="fullscreen-image-viewer" id="fullscreen-viewer">
-            <span class="fullscreen-close" id="fullscreen-close">&times;</span>
-            <img src="" alt="Enlarged QR Code" class="fullscreen-image" id="fullscreen-image">
+        <dialog class="fullscreen-image-viewer" id="fullscreen-viewer" aria-labelledby="fullscreen-caption"
+            aria-modal="true">
+            <button class="fullscreen-close" id="fullscreen-close" aria-label="Close image viewer">&times;</button>
+            <img src="" alt="" class="fullscreen-image" id="fullscreen-image">
             <div class="fullscreen-caption" id="fullscreen-caption"></div>
         </dialog>
 
         <!-- CTA Buttons -->
-        <nav class="cta-container">
+        <nav class="cta-container" aria-label="Quick actions">
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSffxPWO4zNyjXCUFZDKCKcLLW2OVLzhH8Ebcd5xd9fm5HC38A/viewform?usp=dialog"
-                target="_blank" class="cta-button">Subscribe</a>
+                target="_blank" rel="noopener" class="cta-button">Subscribe</a>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSffxPWO4zNyjXCUFZDKCKcLLW2OVLzhH8Ebcd5xd9fm5HC38A/viewform?usp=header"
-                target="_blank" class="cta-button secondary">Contact</a>
-            <a href="https://calendly.com/forgetfulbob/chat" target="_blank" class="cta-button tertiary">Book a Call</a>
+                target="_blank" rel="noopener" class="cta-button secondary">Contact</a>
+            <a href="https://calendly.com/forgetfulbob/chat" target="_blank" rel="noopener"
+                class="cta-button tertiary">Book a Call</a>
         </nav>
     </div>
 
     <script>
-        // Refactored JavaScript with better organization
-
         // Initialize all functionality when DOM is fully loaded
         document.addEventListener('DOMContentLoaded', function () {
             initAccordions();
@@ -782,95 +898,253 @@
             initFullscreenViewer();
         });
 
-        // Accordion functionality
+        // Accordion functionality with proper ARIA attributes and smooth animation
         function initAccordions() {
             const accordions = document.querySelectorAll('.accordion');
 
             accordions.forEach(accordion => {
                 const header = accordion.querySelector('.accordion-header');
+                const content = accordion.querySelector('.accordion-content');
+                const contentInner = accordion.querySelector('.accordion-content-inner');
+
+                // Add click handler
                 header.addEventListener('click', () => {
-                    accordion.classList.toggle('active');
+                    toggleAccordion(accordion, header, content, contentInner);
+                });
+
+                // Add keyboard support
+                header.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleAccordion(accordion, header, content, contentInner);
+                    }
                 });
             });
         }
 
-        // Track selection and lyrics toggle functionality
+        // Helper function to toggle accordion state with smooth animation
+        function toggleAccordion(accordion, header, content, contentInner) {
+            const isExpanded = header.getAttribute('aria-expanded') === 'true';
+
+            // Toggle aria-expanded state
+            header.setAttribute('aria-expanded', !isExpanded);
+
+            if (isExpanded) {
+                // Collapsing
+                const contentHeight = content.scrollHeight;
+                content.style.height = contentHeight + 'px';
+
+                // Force repaint
+                window.getComputedStyle(content).height;
+
+                // Start animation
+                content.style.height = '0';
+
+                // Remove active class after animation
+                content.addEventListener('transitionend', () => {
+                    accordion.classList.remove('active');
+                }, { once: true });
+            } else {
+                // Expanding
+                accordion.classList.add('active');
+
+                // Set height for animation
+                const contentHeight = contentInner.offsetHeight;
+                content.style.height = '0';
+
+                // Force repaint
+                window.getComputedStyle(content).height;
+
+                // Start animation
+                content.style.height = contentHeight + 'px';
+
+                // Clear inline height after animation
+                content.addEventListener('transitionend', () => {
+                    content.style.height = 'auto';
+                }, { once: true });
+            }
+        }
+
+        // Track selection and lyrics toggle functionality with smooth animation
         function initTrackLyrics() {
             const trackItems = document.querySelectorAll('.track-item');
 
             trackItems.forEach(trackItem => {
-                trackItem.addEventListener('click', () => {
-                    const trackLi = trackItem.closest('li');
-                    const trackLyrics = trackLi.querySelector('.track-lyrics');
+                const trackLi = trackItem.closest('li');
+                const trackLyrics = trackLi.querySelector('.track-lyrics');
+                const lyricsInner = trackLi.querySelector('.track-lyrics-inner');
 
-                    if (trackLyrics) {
-                        trackLyrics.classList.toggle('active');
-                        trackLi.classList.toggle('active');
+                if (!trackLyrics || !lyricsInner) return;
+
+                // Add aria attributes
+                trackItem.setAttribute('aria-expanded', 'false');
+
+                // Click handler
+                trackItem.addEventListener('click', () => {
+                    toggleTrackLyrics(trackItem, trackLi, trackLyrics, lyricsInner);
+                });
+
+                // Keyboard support
+                trackItem.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleTrackLyrics(trackItem, trackLi, trackLyrics, lyricsInner);
                     }
                 });
             });
         }
 
-        // QR Code tab switching functionality
+        // Helper function to toggle track lyrics with smooth animation
+        function toggleTrackLyrics(trackItem, trackLi, lyrics, lyricsInner) {
+            const isExpanded = trackItem.getAttribute('aria-expanded') === 'true';
+
+            // Toggle aria-expanded
+            trackItem.setAttribute('aria-expanded', !isExpanded);
+
+            if (isExpanded) {
+                // Collapsing
+                const lyricsHeight = lyrics.scrollHeight;
+                lyrics.style.height = lyricsHeight + 'px';
+
+                // Force repaint
+                window.getComputedStyle(lyrics).height;
+
+                // Start animation
+                lyrics.style.height = '0';
+
+                // Remove active class after animation
+                lyrics.addEventListener('transitionend', () => {
+                    lyrics.classList.remove('active');
+                    trackLi.classList.remove('active');
+                }, { once: true });
+            } else {
+                // Expanding
+                lyrics.classList.add('active');
+                trackLi.classList.add('active');
+
+                // Set height for animation
+                const lyricsHeight = lyricsInner.offsetHeight + 20; // Add padding
+                lyrics.style.height = '0';
+
+                // Force repaint
+                window.getComputedStyle(lyrics).height;
+
+                // Start animation
+                lyrics.style.height = lyricsHeight + 'px';
+
+                // Clear inline height after animation
+                lyrics.addEventListener('transitionend', () => {
+                    lyrics.style.height = 'auto';
+                }, { once: true });
+            }
+        }
+
+        // QR Code tab switching functionality with proper ARIA
         function initQrCodeTabs() {
-            const qrTabs = document.querySelectorAll('.qr-tab');
-            const qrImages = document.querySelectorAll('.qr-image');
+            const qrTabs = document.querySelectorAll('[role="tab"]');
+            const qrPanels = document.querySelectorAll('[role="tabpanel"]');
 
             qrTabs.forEach(tab => {
                 tab.addEventListener('click', () => {
-                    // Remove active class from all tabs and images
-                    qrTabs.forEach(t => t.classList.remove('active'));
-                    qrImages.forEach(img => img.classList.remove('active'));
+                    // Remove active class and set aria-selected to false for all tabs
+                    qrTabs.forEach(t => {
+                        t.setAttribute('aria-selected', 'false');
+                        t.classList.remove('active');
+                    });
 
-                    // Add active class to clicked tab
+                    // Hide all panels
+                    qrPanels.forEach(panel => {
+                        panel.setAttribute('hidden', '');
+                    });
+
+                    // Set active tab and show corresponding panel
+                    tab.setAttribute('aria-selected', 'true');
                     tab.classList.add('active');
 
-                    // Show corresponding QR image
-                    const qrType = tab.getAttribute('data-qr');
-                    const qrImage = document.getElementById(`${qrType}-qr`);
-                    if (qrImage) {
-                        qrImage.classList.add('active');
+                    const panelId = tab.getAttribute('aria-controls');
+                    const panel = document.getElementById(panelId);
+                    if (panel) {
+                        panel.removeAttribute('hidden');
+
+                        // Ensure the image inside is active
+                        const img = panel.querySelector('.qr-image');
+                        if (img) {
+                            document.querySelectorAll('.qr-image').forEach(i => i.classList.remove('active'));
+                            img.classList.add('active');
+                        }
+                    }
+                });
+
+                // Add keyboard navigation for tabs
+                tab.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                        e.preventDefault();
+
+                        const tabs = Array.from(qrTabs);
+                        const currentIndex = tabs.indexOf(tab);
+                        let nextIndex;
+
+                        if (e.key === 'ArrowRight') {
+                            nextIndex = (currentIndex + 1) % tabs.length;
+                        } else {
+                            nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+                        }
+
+                        tabs[nextIndex].click();
+                        tabs[nextIndex].focus();
                     }
                 });
             });
         }
 
-        // Fullscreen image viewer functionality
+        // Fullscreen image viewer with better dialog implementation
         function initFullscreenViewer() {
-            const fullscreenViewer = document.getElementById('fullscreen-viewer');
+            const dialog = document.getElementById('fullscreen-viewer');
             const fullscreenImage = document.getElementById('fullscreen-image');
             const fullscreenCaption = document.getElementById('fullscreen-caption');
-            const fullscreenClose = document.getElementById('fullscreen-close');
+            const closeButton = document.getElementById('fullscreen-close');
             const qrImages = document.querySelectorAll('.qr-image');
 
-            // Open fullscreen viewer when QR image is clicked
+            // Keep track of element that had focus before opening dialog
+            let previouslyFocused;
+
+            // Open dialog when QR image is clicked
             qrImages.forEach(img => {
                 img.addEventListener('click', () => {
+                    previouslyFocused = document.activeElement;
+
                     fullscreenImage.src = img.src;
+                    fullscreenImage.alt = img.alt;
                     fullscreenCaption.textContent = img.alt;
-                    fullscreenViewer.classList.add('active');
+
+                    dialog.classList.add('active');
+                    closeButton.focus();
                 });
             });
 
-            // Close fullscreen viewer methods
-            function closeViewer() {
-                fullscreenViewer.classList.remove('active');
+            // Close dialog methods
+            function closeDialog() {
+                dialog.classList.remove('active');
+
+                if (previouslyFocused) {
+                    previouslyFocused.focus();
+                }
             }
 
-            // Close on X button click
-            fullscreenClose.addEventListener('click', closeViewer);
+            // Close button click handler
+            closeButton.addEventListener('click', closeDialog);
 
             // Close when clicking outside the image
-            fullscreenViewer.addEventListener('click', (e) => {
-                if (e.target === fullscreenViewer) {
-                    closeViewer();
+            dialog.addEventListener('click', (e) => {
+                if (e.target === dialog) {
+                    closeDialog();
                 }
             });
 
-            // Close when Escape key is pressed
+            // Close on Escape key
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && fullscreenViewer.classList.contains('active')) {
-                    closeViewer();
+                if (e.key === 'Escape' && dialog.classList.contains('active')) {
+                    closeDialog();
                 }
             });
         }

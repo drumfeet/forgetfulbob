@@ -892,262 +892,215 @@
     <script>
         // Initialize all functionality when DOM is fully loaded
         document.addEventListener('DOMContentLoaded', function () {
-            initAccordions();
-            initTrackLyrics();
-            initQrCodeTabs();
-            initFullscreenViewer();
+            Accordion.init();
+            TrackLyrics.init();
+            QrCodeTabs.init();
+            FullscreenViewer.init();
         });
 
-        // Accordion functionality with proper ARIA attributes and smooth animation
-        function initAccordions() {
-            const accordions = document.querySelectorAll('.accordion');
+        // Accordion Module
+        const Accordion = {
+            init() {
+                const accordions = document.querySelectorAll('.accordion');
+                accordions.forEach(accordion => {
+                    const header = accordion.querySelector('.accordion-header');
+                    const content = accordion.querySelector('.accordion-content');
+                    const contentInner = accordion.querySelector('.accordion-content-inner');
 
-            accordions.forEach(accordion => {
-                const header = accordion.querySelector('.accordion-header');
-                const content = accordion.querySelector('.accordion-content');
-                const contentInner = accordion.querySelector('.accordion-content-inner');
-
-                // Add click handler
-                header.addEventListener('click', () => {
-                    toggleAccordion(accordion, header, content, contentInner);
+                    header.addEventListener('click', () => this.toggle(accordion, header, content, contentInner));
+                    header.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            this.toggle(accordion, header, content, contentInner);
+                        }
+                    });
                 });
+            },
 
-                // Add keyboard support
-                header.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        toggleAccordion(accordion, header, content, contentInner);
-                    }
-                });
-            });
-        }
+            toggle(accordion, header, content, contentInner) {
+                const isExpanded = header.getAttribute('aria-expanded') === 'true';
+                header.setAttribute('aria-expanded', !isExpanded);
 
-        // Helper function to toggle accordion state with smooth animation
-        function toggleAccordion(accordion, header, content, contentInner) {
-            const isExpanded = header.getAttribute('aria-expanded') === 'true';
+                if (isExpanded) {
+                    this.collapse(accordion, content);
+                } else {
+                    this.expand(accordion, content, contentInner);
+                }
+            },
 
-            // Toggle aria-expanded state
-            header.setAttribute('aria-expanded', !isExpanded);
-
-            if (isExpanded) {
-                // Collapsing
-                const contentHeight = content.scrollHeight;
-                content.style.height = contentHeight + 'px';
-
-                // Force repaint
-                window.getComputedStyle(content).height;
-
-                // Start animation
-                content.style.height = '0';
-
-                // Remove active class after animation
-                content.addEventListener('transitionend', () => {
-                    accordion.classList.remove('active');
-                }, { once: true });
-            } else {
-                // Expanding
+            expand(accordion, content, contentInner) {
                 accordion.classList.add('active');
-
-                // Set height for animation
                 const contentHeight = contentInner.offsetHeight;
                 content.style.height = '0';
-
-                // Force repaint
-                window.getComputedStyle(content).height;
-
-                // Start animation
+                window.getComputedStyle(content).height; // Force repaint
                 content.style.height = contentHeight + 'px';
-
-                // Clear inline height after animation
                 content.addEventListener('transitionend', () => {
                     content.style.height = 'auto';
                 }, { once: true });
+            },
+
+            collapse(accordion, content) {
+                const contentHeight = content.scrollHeight;
+                content.style.height = contentHeight + 'px';
+                window.getComputedStyle(content).height; // Force repaint
+                content.style.height = '0';
+                content.addEventListener('transitionend', () => {
+                    accordion.classList.remove('active');
+                }, { once: true });
             }
-        }
+        };
 
-        // Track selection and lyrics toggle functionality with smooth animation
-        function initTrackLyrics() {
-            const trackItems = document.querySelectorAll('.track-item');
+        // Track Lyrics Module
+        const TrackLyrics = {
+            init() {
+                const trackItems = document.querySelectorAll('.track-item');
+                trackItems.forEach(trackItem => {
+                    const trackLi = trackItem.closest('li');
+                    const trackLyrics = trackLi.querySelector('.track-lyrics');
+                    const lyricsInner = trackLi.querySelector('.track-lyrics-inner');
 
-            trackItems.forEach(trackItem => {
-                const trackLi = trackItem.closest('li');
-                const trackLyrics = trackLi.querySelector('.track-lyrics');
-                const lyricsInner = trackLi.querySelector('.track-lyrics-inner');
+                    if (!trackLyrics || !lyricsInner) return;
 
-                if (!trackLyrics || !lyricsInner) return;
-
-                // Add aria attributes
-                trackItem.setAttribute('aria-expanded', 'false');
-
-                // Click handler
-                trackItem.addEventListener('click', () => {
-                    toggleTrackLyrics(trackItem, trackLi, trackLyrics, lyricsInner);
+                    trackItem.setAttribute('aria-expanded', 'false');
+                    trackItem.addEventListener('click', () => this.toggle(trackItem, trackLi, trackLyrics, lyricsInner));
+                    trackItem.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            this.toggle(trackItem, trackLi, trackLyrics, lyricsInner);
+                        }
+                    });
                 });
+            },
 
-                // Keyboard support
-                trackItem.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        toggleTrackLyrics(trackItem, trackLi, trackLyrics, lyricsInner);
-                    }
-                });
-            });
-        }
+            toggle(trackItem, trackLi, lyrics, lyricsInner) {
+                const isExpanded = trackItem.getAttribute('aria-expanded') === 'true';
+                trackItem.setAttribute('aria-expanded', !isExpanded);
 
-        // Helper function to toggle track lyrics with smooth animation
-        function toggleTrackLyrics(trackItem, trackLi, lyrics, lyricsInner) {
-            const isExpanded = trackItem.getAttribute('aria-expanded') === 'true';
+                if (isExpanded) {
+                    this.collapse(trackLi, lyrics);
+                } else {
+                    this.expand(trackLi, lyrics, lyricsInner);
+                }
+            },
 
-            // Toggle aria-expanded
-            trackItem.setAttribute('aria-expanded', !isExpanded);
+            expand(trackLi, lyrics, lyricsInner) {
+                trackLi.classList.add('active');
+                lyrics.classList.add('active');
+                const lyricsHeight = lyricsInner.offsetHeight + 20; // Add padding
+                lyrics.style.height = '0';
+                window.getComputedStyle(lyrics).height; // Force repaint
+                lyrics.style.height = lyricsHeight + 'px';
+                lyrics.addEventListener('transitionend', () => {
+                    lyrics.style.height = 'auto';
+                }, { once: true });
+            },
 
-            if (isExpanded) {
-                // Collapsing
+            collapse(trackLi, lyrics) {
                 const lyricsHeight = lyrics.scrollHeight;
                 lyrics.style.height = lyricsHeight + 'px';
-
-                // Force repaint
-                window.getComputedStyle(lyrics).height;
-
-                // Start animation
+                window.getComputedStyle(lyrics).height; // Force repaint
                 lyrics.style.height = '0';
-
-                // Remove active class after animation
                 lyrics.addEventListener('transitionend', () => {
                     lyrics.classList.remove('active');
                     trackLi.classList.remove('active');
                 }, { once: true });
-            } else {
-                // Expanding
-                lyrics.classList.add('active');
-                trackLi.classList.add('active');
-
-                // Set height for animation
-                const lyricsHeight = lyricsInner.offsetHeight + 20; // Add padding
-                lyrics.style.height = '0';
-
-                // Force repaint
-                window.getComputedStyle(lyrics).height;
-
-                // Start animation
-                lyrics.style.height = lyricsHeight + 'px';
-
-                // Clear inline height after animation
-                lyrics.addEventListener('transitionend', () => {
-                    lyrics.style.height = 'auto';
-                }, { once: true });
             }
-        }
+        };
 
-        // QR Code tab switching functionality with proper ARIA
-        function initQrCodeTabs() {
-            const qrTabs = document.querySelectorAll('[role="tab"]');
-            const qrPanels = document.querySelectorAll('[role="tabpanel"]');
+        // QR Code Tabs Module
+        const QrCodeTabs = {
+            init() {
+                const qrTabs = document.querySelectorAll('[role="tab"]');
+                const qrPanels = document.querySelectorAll('[role="tabpanel"]');
 
-            qrTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    // Remove active class and set aria-selected to false for all tabs
-                    qrTabs.forEach(t => {
-                        t.setAttribute('aria-selected', 'false');
-                        t.classList.remove('active');
+                qrTabs.forEach(tab => {
+                    tab.addEventListener('click', () => this.switchTab(tab, qrTabs, qrPanels));
+                    tab.addEventListener('keydown', (e) => this.handleKeydown(e, tab, qrTabs));
+                });
+            },
+
+            switchTab(tab, qrTabs, qrPanels) {
+                qrTabs.forEach(t => {
+                    t.setAttribute('aria-selected', 'false');
+                    t.classList.remove('active');
+                });
+
+                qrPanels.forEach(panel => {
+                    panel.setAttribute('hidden', '');
+                });
+
+                tab.setAttribute('aria-selected', 'true');
+                tab.classList.add('active');
+
+                const panelId = tab.getAttribute('aria-controls');
+                const panel = document.getElementById(panelId);
+                if (panel) {
+                    panel.removeAttribute('hidden');
+                    const img = panel.querySelector('.qr-image');
+                    if (img) {
+                        document.querySelectorAll('.qr-image').forEach(i => i.classList.remove('active'));
+                        img.classList.add('active');
+                    }
+                }
+            },
+
+            handleKeydown(e, tab, qrTabs) {
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    const tabs = Array.from(qrTabs);
+                    const currentIndex = tabs.indexOf(tab);
+                    const nextIndex = e.key === 'ArrowRight'
+                        ? (currentIndex + 1) % tabs.length
+                        : (currentIndex - 1 + tabs.length) % tabs.length;
+                    tabs[nextIndex].click();
+                    tabs[nextIndex].focus();
+                }
+            }
+        };
+
+        // Fullscreen Viewer Module
+        const FullscreenViewer = {
+            init() {
+                const dialog = document.getElementById('fullscreen-viewer');
+                const fullscreenImage = document.getElementById('fullscreen-image');
+                const fullscreenCaption = document.getElementById('fullscreen-caption');
+                const closeButton = document.getElementById('fullscreen-close');
+                const qrImages = document.querySelectorAll('.qr-image');
+
+                let previouslyFocused;
+
+                qrImages.forEach(img => {
+                    img.addEventListener('click', () => {
+                        previouslyFocused = document.activeElement;
+                        this.open(dialog, fullscreenImage, fullscreenCaption, img);
                     });
+                });
 
-                    // Hide all panels
-                    qrPanels.forEach(panel => {
-                        panel.setAttribute('hidden', '');
-                    });
+                closeButton.addEventListener('click', () => this.close(dialog, previouslyFocused));
+                dialog.addEventListener('click', (e) => {
+                    if (e.target === dialog) this.close(dialog, previouslyFocused);
+                });
 
-                    // Set active tab and show corresponding panel
-                    tab.setAttribute('aria-selected', 'true');
-                    tab.classList.add('active');
-
-                    const panelId = tab.getAttribute('aria-controls');
-                    const panel = document.getElementById(panelId);
-                    if (panel) {
-                        panel.removeAttribute('hidden');
-
-                        // Ensure the image inside is active
-                        const img = panel.querySelector('.qr-image');
-                        if (img) {
-                            document.querySelectorAll('.qr-image').forEach(i => i.classList.remove('active'));
-                            img.classList.add('active');
-                        }
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && dialog.classList.contains('active')) {
+                        this.close(dialog, previouslyFocused);
                     }
                 });
+            },
 
-                // Add keyboard navigation for tabs
-                tab.addEventListener('keydown', (e) => {
-                    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-                        e.preventDefault();
+            open(dialog, fullscreenImage, fullscreenCaption, img) {
+                fullscreenImage.src = img.src;
+                fullscreenImage.alt = img.alt;
+                fullscreenCaption.textContent = img.alt;
+                dialog.classList.add('active');
+                document.getElementById('fullscreen-close').focus();
+            },
 
-                        const tabs = Array.from(qrTabs);
-                        const currentIndex = tabs.indexOf(tab);
-                        let nextIndex;
-
-                        if (e.key === 'ArrowRight') {
-                            nextIndex = (currentIndex + 1) % tabs.length;
-                        } else {
-                            nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
-                        }
-
-                        tabs[nextIndex].click();
-                        tabs[nextIndex].focus();
-                    }
-                });
-            });
-        }
-
-        // Fullscreen image viewer with better dialog implementation
-        function initFullscreenViewer() {
-            const dialog = document.getElementById('fullscreen-viewer');
-            const fullscreenImage = document.getElementById('fullscreen-image');
-            const fullscreenCaption = document.getElementById('fullscreen-caption');
-            const closeButton = document.getElementById('fullscreen-close');
-            const qrImages = document.querySelectorAll('.qr-image');
-
-            // Keep track of element that had focus before opening dialog
-            let previouslyFocused;
-
-            // Open dialog when QR image is clicked
-            qrImages.forEach(img => {
-                img.addEventListener('click', () => {
-                    previouslyFocused = document.activeElement;
-
-                    fullscreenImage.src = img.src;
-                    fullscreenImage.alt = img.alt;
-                    fullscreenCaption.textContent = img.alt;
-
-                    dialog.classList.add('active');
-                    closeButton.focus();
-                });
-            });
-
-            // Close dialog methods
-            function closeDialog() {
+            close(dialog, previouslyFocused) {
                 dialog.classList.remove('active');
-
-                if (previouslyFocused) {
-                    previouslyFocused.focus();
-                }
+                if (previouslyFocused) previouslyFocused.focus();
             }
-
-            // Close button click handler
-            closeButton.addEventListener('click', closeDialog);
-
-            // Close when clicking outside the image
-            dialog.addEventListener('click', (e) => {
-                if (e.target === dialog) {
-                    closeDialog();
-                }
-            });
-
-            // Close on Escape key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && dialog.classList.contains('active')) {
-                    closeDialog();
-                }
-            });
-        }
+        };
     </script>
 </body>
 

@@ -50,25 +50,6 @@
     --font-size-3xl: calc(var(--font-size-2xl) * 1.25);
     --font-size-5xl: 3rem;
 
-    /* **************************************** */
-    /* LEGACY ALIASES FOR BACKWARD COMPATIBILITY */
-    /* **************************************** */
-    --background: var(--color-surface-background);
-    --foreground: var(--color-text-primary);
-    --muted: var(--color-surface-muted);
-    --muted-foreground: var(--color-text-muted);
-    --border: var(--color-border-default);
-    --accent: var(--color-brand-accent);
-    --accent-foreground: var(--color-brand-on-accent);
-    --card: var(--color-card-surface);
-    --card-foreground: var(--color-card-text);
-    --primary: var(--color-action-primary);
-    --primary-foreground: var(--color-action-primary-text);
-    --secondary: var(--color-action-secondary);
-    --secondary-foreground: var(--color-action-secondary-text);
-    --destructive: var(--color-action-danger);
-    --destructive-foreground: var(--color-action-danger-text);
-    --ring: var(--color-focus-ring);
 }
 
 * {
@@ -78,8 +59,8 @@
 }
 
 body {
-    background-color: var(--background);
-    color: var(--foreground);
+    background-color: var(--color-surface-background);
+    color: var(--color-text-primary);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
         "Segoe UI Emoji", "Segoe UI Symbol";
     background-image: radial-gradient(circle at 100% 0%, rgba(138, 99, 210, 0.05) 0%, transparent 25%),
@@ -342,27 +323,27 @@ ol {
 }
 
 .text-muted-foreground {
-    color: var(--muted-foreground);
+    color: var(--color-text-muted);
 }
 
 .text-accent {
-    color: var(--accent);
+    color: var(--color-brand-accent);
 }
 
 /* Components */
 .glass-card {
     background-color: rgba(18, 18, 26, 0.7);
     backdrop-filter: blur(10px);
-    border: 1px solid var(--border);
+    border: 1px solid var(--color-border-default);
     border-radius: var(--radius);
 }
 
 .track-lyrics {
     height: 0;
     overflow: hidden;
-    background-color: var(--secondary);
+    background-color: var(--color-action-secondary);
     border-radius: var(--radius);
-    border-left: 2px solid var(--accent);
+    border-left: 2px solid var(--color-brand-accent);
     margin-top: 0.5rem;
     transition: height 0.2s ease;
 }
@@ -382,7 +363,7 @@ ol {
     padding-top: 1rem;
     border-top: 1px solid rgba(138, 99, 210, 0.2);
     font-size: 0.8rem;
-    color: var(--muted-foreground);
+    color: var(--color-text-muted);
     line-height: 1.5;
 }
 
@@ -423,7 +404,7 @@ ol {
     height: 1px;
     bottom: -2px;
     left: 0;
-    background-color: var(--accent);
+    background-color: var(--color-brand-accent);
     transition: width 0.3s ease;
 }
 
@@ -445,7 +426,7 @@ ol {
     left: 0;
     width: 3rem;
     height: 2px;
-    background-color: var(--accent);
+    background-color: var(--color-brand-accent);
 }
 
 .subtle-shadow {
@@ -457,7 +438,7 @@ ol {
 }
 
 .gradient-text {
-    background: linear-gradient(to right, var(--foreground), var(--muted-foreground));
+    background: linear-gradient(to right, var(--color-text-primary), var(--color-text-muted));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -466,7 +447,7 @@ ol {
 .gradient-border {
     position: relative;
     border-radius: var(--radius);
-    background: var(--card);
+    background: var(--color-card-surface);
 }
 
 .gradient-border::before {
@@ -476,7 +457,7 @@ ol {
     left: -1px;
     right: -1px;
     bottom: -1px;
-    background: linear-gradient(45deg, var(--accent), transparent, var(--accent));
+    background: linear-gradient(45deg, var(--color-brand-accent), transparent, var(--color-brand-accent));
     border-radius: calc(var(--radius) + 1px);
     z-index: -1;
     opacity: 0;
@@ -491,9 +472,9 @@ ol {
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
-    background-color: var(--secondary);
-    color: var(--secondary-foreground);
-    border: 1px solid var(--border);
+    background-color: var(--color-action-secondary);
+    color: var(--color-action-secondary-text);
+    border: 1px solid var(--color-border-default);
     border-radius: var(--radius);
     padding: 0.75rem 1rem;
     font-weight: 500;
@@ -505,14 +486,14 @@ ol {
 }
 
 .cta-button:hover {
-    background-color: var(--muted);
-    border-color: var(--accent);
+    background-color: var(--color-surface-muted);
+    border-color: var(--color-brand-accent);
 }
 
 .cta-button.primary {
-    background-color: var(--accent);
-    color: var(--accent-foreground);
-    border-color: var(--accent);
+    background-color: var(--color-brand-accent);
+    color: var(--color-brand-on-accent);
+    border-color: var(--color-brand-accent);
 }
 
 .cta-button.primary:hover {
@@ -552,7 +533,7 @@ ol {
 
 .accordion-icon {
     transition: transform 0.3s ease;
-    background-color: var(--muted);
+    background-color: var(--color-surface-muted);
     border-radius: 9999px;
     padding: 0.375rem;
 }
@@ -560,7 +541,7 @@ ol {
 .accordion-section.active .accordion-icon {
     transform: rotate(180deg);
     background-color: rgba(138, 99, 210, 0.1);
-    color: var(--accent);
+    color: var(--color-brand-accent);
 }
 
 .accordion-content {
@@ -596,7 +577,7 @@ ol {
     height: 100%;
     border-radius: 9999px;
     overflow: hidden;
-    border: 1px solid var(--border);
+    border: 1px solid var(--color-border-default);
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15), 0 0 20px rgba(255, 255, 255, 0.25);
     z-index: 2;
 }
@@ -613,7 +594,7 @@ ol {
     height: 0;
     overflow: hidden;
     border-radius: 0.375rem;
-    border: 1px solid var(--border);
+    border: 1px solid var(--color-border-default);
 }
 
 .youtube-iframe {
@@ -672,7 +653,7 @@ ol {
     transition: all 0.3s ease;
     font-size: 0.875rem;
     font-weight: 500;
-    background-color: var(--muted);
+    background-color: var(--color-surface-muted);
 }
 
 .qr-tab:hover {
@@ -680,7 +661,7 @@ ol {
 }
 
 .qr-tab.active {
-    background-color: var(--accent);
+    background-color: var(--color-brand-accent);
     color: white;
 }
 
@@ -697,7 +678,7 @@ ol {
     background-color: white;
     padding: 1rem;
     border-radius: 0.375rem;
-    border: 1px solid var(--border);
+    border: 1px solid var(--color-border-default);
     margin-bottom: 0.75rem;
 }
 
@@ -724,7 +705,7 @@ ol {
 
 .qr-action-button {
     padding: 0.375rem;
-    background-color: var(--muted);
+    background-color: var(--color-surface-muted);
     border-radius: 0.375rem;
     transition: background-color 0.3s ease;
 }
@@ -734,7 +715,7 @@ ol {
 }
 
 .qr-account-number {
-    background-color: var(--muted);
+    background-color: var(--color-surface-muted);
     padding: 0.5rem;
     border-radius: 0.375rem;
     font-size: 0.875rem;
@@ -752,13 +733,13 @@ ol {
 }
 
 .social-icon {
-    color: var(--muted-foreground);
+    color: var(--color-text-muted);
     transition: all 0.3s ease;
     padding: 0.5rem;
 }
 
 .social-icon:hover {
-    color: var(--accent);
+    color: var(--color-brand-accent);
     transform: translateY(-0.25rem);
 }
 
@@ -848,15 +829,15 @@ ol {
 }
 
 .hover\:text-accent:hover {
-    color: var(--accent);
+    color: var(--color-brand-accent);
 }
 
 .hover\:text-foreground:hover {
-    color: var(--foreground);
+    color: var(--color-text-primary);
 }
 
 .hover\:border-accent:hover {
-    border-color: var(--accent);
+    border-color: var(--color-brand-accent);
 }
 
 .hover\:shadow-md:hover {
@@ -910,11 +891,11 @@ ol {
 }
 
 .bg-accent {
-    background-color: var(--accent);
+    background-color: var(--color-brand-accent);
 }
 
 .bg-muted {
-    background-color: var(--muted);
+    background-color: var(--color-surface-muted);
 }
 
 .bg-accent\/10 {
@@ -930,7 +911,7 @@ ol {
 }
 
 .border-border {
-    border-color: var(--border);
+    border-color: var(--color-border-default);
 }
 
 .last\:border-b-0:last-child {

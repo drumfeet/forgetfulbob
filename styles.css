@@ -79,6 +79,10 @@ a {
     color: inherit;
     text-decoration: none;
 }
+a:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
 
 button {
     background: none;
@@ -393,24 +397,7 @@ ol {
     background-color: rgba(138, 99, 210, 0.15);
 }
 
-.animated-link {
-    position: relative;
-}
 
-.animated-link::after {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 1px;
-    bottom: -2px;
-    left: 0;
-    background-color: var(--color-brand-accent);
-    transition: width 0.3s ease;
-}
-
-.animated-link:hover::after {
-    width: 100%;
-}
 
 .section-heading {
     position: relative;
